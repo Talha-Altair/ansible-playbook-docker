@@ -2,6 +2,7 @@
 ---
 - name: Install Docker
   hosts: altair
+  become: yes
   vars:
     DOCKER_COMPOSE_VERSION: "1.29.2"
     DOCKER_PACKAGES:
@@ -10,7 +11,6 @@
     - curl
     - gnupg-agent
     - software-properties-common
-    - btop
     - jq
     - docker.io
     USER: "talha"
@@ -20,7 +20,9 @@
     apt:
       update_cache: "yes"
       force_apt_get: "yes"
-      sudo: "yes"
+
+  - name: set alias
+    shell: echo 'alias clr="clear"' >> /home/{{ USER }}/.bash_aliases
 
   - name: Install packages needed for Docker
     apt:
