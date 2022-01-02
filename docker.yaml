@@ -34,14 +34,6 @@
     shell: lsb_release -cs
     register: ubuntu_version
 
-  - name: Test Docker with hello world example
-    shell: "docker run hello-world"
-    register: hello_world_output
-
-  - name: Show output of hello word example
-    debug:
-      msg: "Container Output: {{hello_world_output.stdout}}"
-
   - name: Create docker group
     group:
       name: "docker"
@@ -52,6 +44,14 @@
       name: "{{ USER }}"
       groups: "docker"
       append: "yes"
+
+  - name: Test Docker with hello world example
+    shell: "docker run hello-world"
+    register: hello_world_output
+
+  - name: Show output of hello world example
+    debug:
+      msg: "Container Output: {{hello_world_output.stdout}}"
 
   - name: Install Docker Compose
     get_url:
